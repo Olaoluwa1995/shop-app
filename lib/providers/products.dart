@@ -35,13 +35,30 @@ class Products with ChangeNotifier {
             'https://images.journeys.com/images/products/1_602366_ZM_ALT1.JPG')
   ];
 
+  var _showFavoritesOnly = false;
+
   List<Product> get items {
+    // if (_showFavoritesOnly) {
+    //   return _items.where((item) => item.isFavorite).toList();
+    // }
     return [..._items];
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((item) => item.isFavorite).toList();
   }
 
   Product findById(String id) {
     return items.firstWhere((item) => item.id == id);
   }
+
+  // void showFavorites() {
+  //   _showFavoritesOnly = true;
+  // }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  // }
 
   void appProduct() {
     // _items.add(value);
