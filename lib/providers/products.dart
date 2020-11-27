@@ -60,8 +60,8 @@ class Products with ChangeNotifier {
   //   _showFavoritesOnly = false;
   // }
 
-  void appProduct() {
-    // _items.add(value);
+  void aadProduct(Product product) {
+    _items.add(product);
     notifyListeners();
   }
 }
