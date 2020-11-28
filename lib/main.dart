@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Lato',
         ),
+        debugShowCheckedModeBanner: false,
         // home or index screen
         home: ProductOverviewScreen(),
         routes: {
