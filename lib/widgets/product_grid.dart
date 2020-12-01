@@ -23,11 +23,11 @@ class ProductsGrid extends StatelessWidget {
     final products = showFavs ? productsData.favoriteItems : productsData.items;
 
     return GridView.builder(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(12.0),
       itemCount: products.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
+        childAspectRatio: 2 / 2.5,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
