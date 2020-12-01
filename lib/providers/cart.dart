@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class CartItem {
   final String id;
@@ -36,7 +39,12 @@ class Cart with ChangeNotifier {
   }
 
   // add item to cart
-  void addItem(String productId, double price, String title, String imageUrl) {
+  Future<void> addItem(
+    String productId,
+    double price,
+    String title,
+    String imageUrl,
+  ) async {
     if (_items.containsKey(productId)) {
       // item already exist in the cart
       _items.update(
@@ -50,6 +58,14 @@ class Cart with ChangeNotifier {
         ),
       );
     } else {
+      // final url = 'https://shopapp-60226.firebaseio.com/cart.json';
+      // final reponse = await http.post(url,
+      //     body: json.encode({
+      //       'title': title,
+      //       'price': price,
+      //       'quantity': 1,
+      //       'imageUrl': imageUrl,
+      //     }));
       _items.putIfAbsent(
         productId,
         //creating new cart item
