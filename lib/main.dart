@@ -26,14 +26,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Products(),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          update: (ctx, auth, previousProduct) => Products(
+              auth.token, previousProduct == null ? [] : previousProduct.items),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          update: (ctx, auth, previousOrders) => Orders(
+              auth.token, previousOrders == null ? [] : previousOrders.orders),
         ),
       ],
       child: Consumer<Auth>(
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             fontFamily: 'Lato',
           ),
-          // debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: false,
           // home or index screen
           home: auth.isAuthenticated ? ProductOverviewScreen() : AuthScreen(),
           routes: {

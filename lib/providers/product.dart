@@ -22,8 +22,9 @@ class Product with ChangeNotifier {
     @required this.imageUrl,
   });
 
-  Future<void> toggleFavoriteStatus(String id) async {
-    final url = 'https://shopapp-60226.firebaseio.com/product/$id.json';
+  Future<void> toggleFavoriteStatus(String id, String authToken) async {
+    final url =
+        'https://shopapp-60226.firebaseio.com/product/$id.json?auth=$authToken';
     isFavorite = !isFavorite;
     notifyListeners();
 
