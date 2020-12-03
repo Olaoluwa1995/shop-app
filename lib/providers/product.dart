@@ -22,16 +22,19 @@ class Product with ChangeNotifier {
     @required this.imageUrl,
   });
 
-  Future<void> toggleFavoriteStatus(String id, String authToken) async {
+  Future<void> toggleFavoriteStatus(
+      String id, String authToken, String userId) async {
     final url =
-        'https://shopapp-60226.firebaseio.com/product/$id.json?auth=$authToken';
+        'https://shopapp-60226.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
     isFavorite = !isFavorite;
     notifyListeners();
 
-    final response = await http.patch(url,
-        body: json.encode({
-          'isFavorite': isFavorite,
-        }));
+    final response = await http.put(
+      url,
+      body: json.encode(
+        isFavorite,
+      ),
+    );
     if (response.statusCode >= 400) {
       isFavorite = !isFavorite;
       notifyListeners();

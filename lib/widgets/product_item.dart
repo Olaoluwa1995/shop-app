@@ -37,7 +37,8 @@ class ProductItem extends StatelessWidget {
               ),
               onPressed: () async {
                 try {
-                  await product.toggleFavoriteStatus(product.id, auth.token);
+                  await product.toggleFavoriteStatus(
+                      product.id, auth.token, auth.userId);
                 } catch (err) {
                   scaffold.showSnackBar(
                       SnackBar(content: Text('No internet connection')));
