@@ -9,6 +9,19 @@ class Auth with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
 
+  bool get isAuthenticated {
+    return token != null;
+  }
+
+  String get token {
+    if (_expiryDate != null &&
+        _expiryDate.isAfter(DateTime.now()) &&
+        _token != null) {
+      return _token;
+    }
+    return null;
+  }
+
   Future<void> _authenticate(
       String email, String password, String urlSegement) async {
     try {
@@ -24,9 +37,18 @@ class Auth with ChangeNotifier {
       );
       print(json.decode(response.body));
       final reponseData = json.decode(response.body);
+
       if (reponseData['error'] != null) {
         throw HttpException(reponseData['error']['message']);
       }
+      _token = reponseData['idToken'];
+      _userId = reponseData['localId'];
+      _expiryDate = DateTime.now().add(
+        Duration(
+          seconds: int.parse(reponseData['expiresIn']),
+        ),
+      );
+      notifyListeners();
     } catch (err) {
       throw err;
     }
