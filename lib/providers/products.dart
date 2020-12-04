@@ -7,37 +7,7 @@ import '../models/http_exception.dart';
 import './product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
-    // Product(
-    //   id: 'p1',
-    //   title: 'Red Shirt',
-    //   description: 'A red shirt - it is pretty red!',
-    //   price: 29.99,
-    //   imageUrl:
-    //       'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-    // ),
-    // Product(
-    //     id: 'p2',
-    //     title: 'Red Face Cap',
-    //     description: 'A nice pair of trousers.',
-    //     price: 59.99,
-    //     imageUrl:
-    //         'https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/product/T/D/142592_1566811700.jpg'),
-    // Product(
-    //     id: 'p3',
-    //     title: 'Black Shoe',
-    //     description: 'A nice pair of trousers.',
-    //     price: 59.99,
-    //     imageUrl:
-    //         'https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/61/152006/1.jpg?7348'),
-    // Product(
-    //     id: 'p4',
-    //     title: 'Trousers',
-    //     description: 'A nice pair of trousers.',
-    //     price: 59.99,
-    //     imageUrl:
-    //         'https://images.journeys.com/images/products/1_602366_ZM_ALT1.JPG')
-  ];
+  List<Product> _items = [];
 
   var _showFavoritesOnly = false;
   final String authToken;
@@ -68,9 +38,11 @@ class Products with ChangeNotifier {
   //   _showFavoritesOnly = false;
   // }
 
-  Future<void> getProduct() async {
+  Future<void> getProduct([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? '&orderBy="userId"&equalTo="$userId"' : '';
     var url =
-        'https://shopapp-60226.firebaseio.com/product.json?auth=$authToken';
+        'https://shopapp-60226.firebaseio.com/product.json?auth=$authToken$filterString';
     try {
       final product = await http.get(url);
       final productItem = json.decode(product.body) as Map<String, dynamic>;
@@ -111,6 +83,7 @@ class Products with ChangeNotifier {
           'price': product.price,
           'description': product.description,
           'title': product.title,
+          'userId': userId,
         }),
       );
 
