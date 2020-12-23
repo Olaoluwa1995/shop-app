@@ -16,38 +16,50 @@ class ProductDetailScreen extends StatelessWidget {
     ).findById(productId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(loadedProduct.title),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: FittedBox(
-                child: Hero(
-                  tag: loadedProduct.id,
-                  child: Image.network(
-                    loadedProduct.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
+      // appBar: AppBar(
+      //   title: Text(loadedProduct.title),
+      // ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 300,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(loadedProduct.title),
+              background: Hero(
+                tag: loadedProduct.id,
+                child: Image.network(
+                  loadedProduct.imageUrl,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(
-              height: 100,
-            ),
-            Text(
-              '\$${loadedProduct.price}',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 50,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              SizedBox(
+                height: 100,
               ),
-            ),
-            Text(loadedProduct.description)
-          ],
-        ),
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      '\$${loadedProduct.price}',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 50,
+                      ),
+                    ),
+                    Text(loadedProduct.description)
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 800,
+              ),
+            ]),
+          )
+        ],
       ),
     );
   }
