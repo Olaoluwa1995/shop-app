@@ -21,7 +21,7 @@ class _OrderItemState extends State<OrderItem> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       height:
-          _expanded ? max(widget.order.products.length * 20.0 + 110, 200) : 95,
+          _expanded ? max(widget.order.products.length * 20.0 + 150, 250) : 160,
       child: Card(
         margin: EdgeInsets.all(10),
         child: Column(
@@ -70,7 +70,8 @@ class _OrderItemState extends State<OrderItem> {
                         ),
                       )
                       .toList()),
-            )
+            ),
+            FlatButton(onPressed: () {}, child: Text('Make Payment'))
           ],
         ),
       ),

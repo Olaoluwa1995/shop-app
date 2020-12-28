@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 
 import '../providers/orders.dart' show Orders;
 import '../widgets/order_item.dart';
