@@ -38,7 +38,7 @@ class Product with ChangeNotifier {
     if (response.statusCode >= 400) {
       isFavorite = !isFavorite;
       notifyListeners();
-      throw HttpException('Could not delete product');
+      throw HttpException('Could not like product');
     }
   }
 }
