@@ -39,7 +39,7 @@ class CartItem extends StatelessWidget {
           color: Theme.of(context).errorColor,
         ),
       ),
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         cart.removeItem(productId);
       },
