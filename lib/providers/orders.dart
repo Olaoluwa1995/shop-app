@@ -11,12 +11,14 @@ class OrderItem {
   final double amount;
   final List<CartItem> products;
   final DateTime dateTime;
+  bool paid;
 
   OrderItem({
     @required this.id,
     @required this.amount,
     @required this.products,
     @required this.dateTime,
+    @required this.paid,
   });
 }
 
@@ -60,6 +62,7 @@ class Orders with ChangeNotifier {
                 )
                 .toList(),
             dateTime: DateTime.parse(order['dateTime']),
+            paid: order['paid'],
           ),
         );
       });
@@ -90,6 +93,7 @@ class Orders with ChangeNotifier {
                     })
                 .toList(),
             'dateTime': timestamp.toIso8601String(),
+            'paid': false,
           }));
       _orders.insert(
         0,
@@ -98,8 +102,28 @@ class Orders with ChangeNotifier {
           amount: total,
           products: cartProducts,
           dateTime: timestamp,
+          paid: false,
         ),
       );
+      notifyListeners();
+    } catch (err) {
+      print(err);
+      HttpException('Internal server error');
+    }
+  }
+
+  Future<void> updateOrder(String id) async {
+    try {
+      print('i got here');
+      final url =
+          'https://shopapp-60226.firebaseio.com/order/$userId/$id.json?auth=$authToken';
+      final response = await http.patch(url,
+          body: json.encode({
+            'paid': true,
+          }));
+      print(response.body);
+      var orderIndex = _orders.indexWhere((order) => order.id == id);
+      _orders[orderIndex].paid = true;
       notifyListeners();
     } catch (err) {
       print(err);
